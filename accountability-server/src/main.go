@@ -1,23 +1,13 @@
 package main
 
 import (
-	"routes"
-	"fmt"
-	"log"
+	"./routes"
 	"net/http"
-	"os"
-
-	"github.com/joho/godotenv"
+	"log"
 )
 
 func main() {
+	r := routes.Handlers()
+	log.Fatal(http.ListenAndServe(":10000", r))
 
-	e := godotenv.Load()
-
-	if e != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	
-	http.Handle("/", routes.Handlers())
 }
