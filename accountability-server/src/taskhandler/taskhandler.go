@@ -19,6 +19,4 @@ func RemoveTask(w http.ResponseWriter, r *http.Request){
 
 func GetTasks(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintln(w, "This will return all your tasks")
-	
-
 }

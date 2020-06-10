@@ -6,5 +6,5 @@ type TaskMilestoneReaction struct {
 
 type TaskMilestone struct {
 	description string
-	reactions TaskMilestoneReaction[]
+	reactions []TaskMilestoneReaction
 }
