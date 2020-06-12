@@ -20,10 +20,10 @@ func Handlers() *mux.Router {
 	r.HandleFunc("/auth/logout", auth.LogoutHandler).Methods("POST")
 
 	// task management services
-	r.HandleFunc("/tasks/createTask", taskhandler.CreateTask).Methods("POST")
-	r.HandleFunc("/tasks/updateTask", taskhandler.UpdateTask).Methods("POST")
-	r.HandleFunc("/tasks/removeTask", taskhandler.RemoveTask).Methods("POST")
-	r.HandleFunc("/tasks/getTasks", taskhandler.GetTasks).Methods("POST")
+	r.HandleFunc("/tasks/create-task", taskhandler.CreateTask).Methods("POST")
+	r.HandleFunc("/tasks/update-task", taskhandler.UpdateTask).Methods("POST")
+	r.HandleFunc("/tasks/remove-task", taskhandler.RemoveTask).Methods("POST")
+	r.HandleFunc("/tasks/get-tasks", taskhandler.GetTasks).Methods("POST")
 
 	return r
 }
