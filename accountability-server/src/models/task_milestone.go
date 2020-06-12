@@ -1,10 +1,10 @@
 package models
 
 type TaskMilestoneReaction struct {
-	comment string
+	comment string;
 }
 
 type TaskMilestone struct {
-	description string
-	reactions TaskMilestoneReaction[]
+	description string;
+	reactions []TaskMilestoneReaction;
 }
