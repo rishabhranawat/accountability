@@ -29,13 +29,13 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.id).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.Id).Find(&task)
 
 	task.Name = updatedTask.Name
 	task.Description = updatedTask.Description
 	task.Trackers = updatedTask.Trackers
 	task.Milestones = updatedTask.Milestones
-	task.Worker = updatedTask.Worker
+	task.Workers = updatedTask.Workers
 
 	env.DbConnection.Save(task)
 
@@ -51,7 +51,7 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.id).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.Id).Find(&task)
 
 	env.DbConnection.Delete(&task)
 	fmt.Fprintln(w, "This will remove a task")
