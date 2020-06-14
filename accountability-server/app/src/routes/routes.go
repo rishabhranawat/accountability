@@ -3,11 +3,11 @@ package routes
 import (
 	"fmt"
 	"net/http"
-	"github.com/gorilla/mux"
-	"../services"
-	"../taskhandler"
-)
 
+	auth "../services"
+	"../taskhandler"
+	"github.com/gorilla/mux"
+)
 
 func Handlers() *mux.Router {
 	r := mux.NewRouter()
@@ -23,12 +23,12 @@ func Handlers() *mux.Router {
 	r.HandleFunc("/tasks/create-task", taskhandler.CreateTask).Methods("POST")
 	r.HandleFunc("/tasks/update-task", taskhandler.UpdateTask).Methods("POST")
 	r.HandleFunc("/tasks/remove-task", taskhandler.RemoveTask).Methods("POST")
-	r.HandleFunc("/tasks/get-tasks", taskhandler.GetTasks).Methods("POST")
+	r.HandleFunc("/tasks/get-tasks", taskhandler.GetUserTasks).Methods("POST")
 
 	return r
 }
 
-func AccountabilityAppHandler(w http.ResponseWriter, r *http.Request){
+func AccountabilityAppHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "Accountability Server is up")
 }
