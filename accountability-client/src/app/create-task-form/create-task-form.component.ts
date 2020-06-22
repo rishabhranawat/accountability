@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-task-form',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateTaskFormComponent implements OnInit {
 
-  constructor() { }
+  username: String;
 
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.username = params['username'];
+      //TODO guruis - If username not provided here, throw error
+    });
+  }
+  
+  createTask(): void {
+    
+  }
+
+  postTask(): void {
+    
   }
 
 }
