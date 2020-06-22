@@ -8,6 +8,7 @@ import { TasksGridComponent } from './tasks-grid/tasks-grid.component';
 import { CreateTaskFormComponent } from './create-task-form/create-task-form.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthFormComponent } from './auth-form/auth-form.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TasksGridComponent,
     CreateTaskFormComponent,
     TimelineComponent,
-    DashboardComponent
+    DashboardComponent,
+    AuthFormComponent
   ],
   imports: [
     BrowserModule,
