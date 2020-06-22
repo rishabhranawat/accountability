@@ -59,6 +59,13 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserTasks(w http.ResponseWriter, r *http.Request) {
-	//TODO guruis - Update this method to be a "GET request that takes in user identifier"
-	fmt.Fprintln(w, "This will return all your tasks")
+	queryValues := r.URL.Query()
+	name := queryValues.Get("username")
+	fmt.Fprintln(w, "This is the user "+name)
+
+	//TODO guruis - query tasks here for the given user
+	// var task models.Task
+	// env.DbConnection.Where("Workers.UserName = ?", name).Find(&task)
+
+	fmt.Fprintln(w, "These are the tasks"+task.Id)
 }
