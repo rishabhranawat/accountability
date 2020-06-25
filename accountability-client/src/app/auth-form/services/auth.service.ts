@@ -12,6 +12,7 @@ export class AuthService {
   public login(user: User): Observable<object> {
     const headerOptions: HttpHeaders = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH'
     });
@@ -19,7 +20,7 @@ export class AuthService {
   }
 
   public logout(user: User): Observable<object> {
-    return this.http.post('http://localhost:10000/auth/logout', user);
+    return this.http.get('http://localhost:10000/');
   }
 
   public create(user: User): Observable<object> {
