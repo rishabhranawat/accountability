@@ -66,6 +66,4 @@ func GetUserTasks(w http.ResponseWriter, r *http.Request) {
 	//TODO guruis - query tasks here for the given user
 	// var task models.Task
 	// env.DbConnection.Where("Workers.UserName = ?", name).Find(&task)
-
-	fmt.Fprintln(w, "These are the tasks"+task.Id)
 }

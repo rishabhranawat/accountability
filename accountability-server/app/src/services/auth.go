@@ -17,7 +17,11 @@ type LoginResponse struct {
   UserName string
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request){
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+
+  ((*(&w))).Header().Set("Access-Control-Allow-Origin", "*")
+  fmt.Println("here!")
+
 	var p models.User
 
 	err := json.NewDecoder(r.Body).Decode(&p)
