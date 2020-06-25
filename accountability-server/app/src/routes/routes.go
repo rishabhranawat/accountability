@@ -29,6 +29,6 @@ func Handlers() *mux.Router {
 }
 
 func AccountabilityAppHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+  w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "Accountability Server is up")
 }

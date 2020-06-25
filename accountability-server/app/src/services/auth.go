@@ -17,9 +17,8 @@ type LoginResponse struct {
   UserName string
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request){
-	var p models.User
-
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+ 	var p models.User
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

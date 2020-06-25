@@ -1,4 +1,7 @@
+import { User } from './../../models/user.model';
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  public password: string;
+  public username: string;
+
+  public isProcessing: boolean;
+
+  constructor(
+    private authService: AuthService,
+  ) {
+
+  }
 
   ngOnInit(): void {
+  }
+
+  login(): void {
+    this.isProcessing = true;
+    this.authService.login({
+      UserName: this.username,
+      Password: this.password
+    } as User).subscribe((data: any) => {
+      this.isProcessing = false;
+      console.log(data);
+    });
   }
 
 }

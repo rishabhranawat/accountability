@@ -1,3 +1,4 @@
+import { AuthFormModule } from './auth-form/auth-form.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
@@ -8,7 +9,7 @@ import { TasksGridComponent } from './tasks-grid/tasks-grid.component';
 import { CreateTaskFormComponent } from './create-task-form/create-task-form.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthFormComponent } from './auth-form/auth-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,13 +17,14 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
     TasksGridComponent,
     CreateTaskFormComponent,
     TimelineComponent,
-    DashboardComponent,
-    AuthFormComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    NgbModule,
+    AuthFormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
