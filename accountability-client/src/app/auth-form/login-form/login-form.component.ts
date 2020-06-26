@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 export class LoginFormComponent implements OnInit {
 
   public password: string;
-  public username: string;
+  public email: string;
 
   public isProcessing: boolean;
 
@@ -27,7 +27,7 @@ export class LoginFormComponent implements OnInit {
   login(): void {
     this.isProcessing = true;
     this.authService.login({
-      UserName: this.username,
+      Email: this.email,
       Password: this.password
     } as User).subscribe((data: any) => {
       this.isProcessing = false;
