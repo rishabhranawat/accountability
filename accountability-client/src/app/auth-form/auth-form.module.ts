@@ -1,3 +1,4 @@
+import { CommonModule } from './../common/common.module';
 import { AuthService } from './services/auth.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,6 @@ import { FormsModule } from '@angular/forms';
     LoginFormComponent
   ],
   imports: [
-    HttpClientModule,
     FormsModule
   ],
   providers: [
