@@ -59,7 +59,6 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserTasks(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Cookie("AuthToken"))
 	// queryValues := r.URL.Query()
 	// name := queryValues.Get("username")
 	// fmt.Fprintln(w, "This is the user "+name)
