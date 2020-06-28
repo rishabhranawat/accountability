@@ -14,11 +14,13 @@ import (
 )
 
 type LoginResponse struct {
-	Token    string
-	UserName string
+	Token        string
+	RefreshToken string
+	UserName     string
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Cookie("AuthToken"))
 	var p models.User
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
@@ -37,12 +39,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, error.Error(), http.StatusForbidden)
 		return
 	}
-
-	// generate token
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = user.UserName
-	claims["exp"] = time.Now().Add(time.Minute * (24 * 60)).Unix()
+	claims["exp"] = time.Now().Add(time.Minute * (2 * 60)).Unix()
 
 	tokenGeneratorWithClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenGeneratorWithClaims.SignedString([]byte("secret"))
@@ -50,8 +50,20 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusForbidden)
 	}
 
+	refreshClaims := jwt.MapClaims{}
+	refreshClaims["user_id"] = user.UserName
+	refreshClaims["exp"] = time.Now().Add(time.Minute * (24 * 60)).Unix()
+
+	refreshTokenGeneratorWithClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims)
+	refreshToken, err := refreshTokenGeneratorWithClaims.SignedString([]byte("secret"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	generateTokensAndSetOnHeader(&w, token, refreshToken)
 	var response LoginResponse
 	response.UserName = user.UserName
+	response.RefreshToken = refreshToken
 	response.Token = token
 
 	jResponse, err := json.Marshal(response)
@@ -63,7 +75,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-
+	fmt.Println(r.Cookie("AuthToken"))
 }
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,4 +95,25 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	env.DbConnection.Create(&p)
 
 	fmt.Fprintf(w, "Successfully created user with username: %s and email: %s", p.UserName, p.Email)
+}
+
+func generateTokensAndSetOnHeader(w *http.ResponseWriter, token string, refreshToken string) {
+
+	authCookie := http.Cookie{
+		Name:     "AuthToken",
+		Value:    token,
+		HttpOnly: true,
+		Path:     "/",
+	}
+
+	http.SetCookie(*w, &authCookie)
+
+	refreshCookie := http.Cookie{
+		Name:     "RefreshToken",
+		Value:    refreshToken,
+		HttpOnly: true,
+		Path:     "/",
+	}
+
+	http.SetCookie(*w, &refreshCookie)
 }
