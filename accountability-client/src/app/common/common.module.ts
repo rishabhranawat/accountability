@@ -1,4 +1,4 @@
-import { RequestHandlerService } from './request-handler.service';
+import { RequestHandlerService } from './services/request-handler.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 

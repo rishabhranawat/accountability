@@ -59,9 +59,9 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserTasks(w http.ResponseWriter, r *http.Request) {
-	queryValues := r.URL.Query()
-	name := queryValues.Get("username")
-	fmt.Fprintln(w, "This is the user "+name)
+	// queryValues := r.URL.Query()
+	// name := queryValues.Get("username")
+	// fmt.Fprintln(w, "This is the user "+name)
 
 	//TODO guruis - query tasks here for the given user
 	// var task models.Task

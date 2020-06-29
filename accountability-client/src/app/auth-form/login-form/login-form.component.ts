@@ -16,7 +16,7 @@ export class LoginFormComponent implements OnInit {
   public isProcessing: boolean;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService
   ) {
 
   }

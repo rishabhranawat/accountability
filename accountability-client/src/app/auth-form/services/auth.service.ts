@@ -1,4 +1,4 @@
-import { RequestHandlerService } from './../../common/request-handler.service';
+import { RequestHandlerService } from '../../common/services/request-handler.service';
 import { User } from './../../models/user.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

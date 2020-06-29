@@ -1,13 +1,14 @@
 package main
 
 import (
-	"./routes"
+	"log"
 	"net/http"
-  "log"
-  "github.com/rs/cors"
-  "github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+
 	"./env"
+	"./routes"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -20,13 +21,14 @@ func main() {
 	}
 	env.DbConnection = db
 
-  defer db.Close()
+	defer db.Close()
 
-  c := cors.New(cors.Options{
-    AllowedHeaders: []string{"*"},
-    AllowedOrigins: []string{"*"}, // All origins
-    AllowedMethods: []string{"GET", "HEAD", "POST", "PUT", "OPTIONS"}, // Allowing only get, just an example
-  })
+	c := cors.New(cors.Options{
+		AllowedHeaders:   []string{"*"},
+		AllowedOrigins:   []string{"http://localhost:4200"},                 // All origins
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS"}, // Allowing only get, just an example
+		AllowCredentials: true,
+	})
 
 	// todo: switch to ListenAndServeTLS
 	log.Fatal(http.ListenAndServe(":10000", c.Handler(r)))
