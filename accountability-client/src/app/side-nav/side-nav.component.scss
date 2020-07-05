@@ -1,5 +1,6 @@
 body {
   font-size: .875rem;
+  font-family: 'Avenir', Helvetica, sans-serif !important;
 }
 
 .feather {
@@ -37,6 +38,12 @@ body {
     position: -webkit-sticky;
     position: sticky;
   }
+}
+
+.sidebar .title {
+  font-weight: 500;
+  color: white;
+  font-weight: 100;
 }
 
 .sidebar .nav-link {
