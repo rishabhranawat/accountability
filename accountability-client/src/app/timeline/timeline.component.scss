@@ -1,0 +1,11 @@
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.timeline-card {
+  flex: 1;
+  margin: 1rem;
+}
