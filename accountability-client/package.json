@@ -28,7 +28,7 @@
     "ag-grid-community": "^23.1.1",
     "bootstrap": "^4.4.0",
     "ngx-cookie-service": "^3.0.4",
-    "rxjs": "~6.5.4",
+    "rxjs": "^6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

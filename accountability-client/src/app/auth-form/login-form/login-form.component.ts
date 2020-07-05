@@ -15,8 +15,7 @@ export class LoginFormComponent implements OnInit {
   public password: string;
   public email: string;
   public faUser = faUser;
-
-
+  public errors: string[];
   public isProcessing: boolean;
 
   constructor(
@@ -34,10 +33,16 @@ export class LoginFormComponent implements OnInit {
     this.authService.login({
       Email: this.email,
       Password: this.password
-    } as User).subscribe((data: any) => {
-      this.isProcessing = false;
-      this.router.navigate(['/dashboard']);
-    });
+    } as User).subscribe(
+      (data: any) => {
+        this.isProcessing = false;
+        this.router.navigate(['/dashboard']);
+      },
+      (error: any) => {
+        this.isProcessing = false;
+        console.log(error);
+      }
+    );
   }
 
 }

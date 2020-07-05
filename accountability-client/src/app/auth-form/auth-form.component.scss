@@ -33,8 +33,10 @@
 }
 
 .tab {
-
+  cursor: pointer;
 }
 .active-tab {
   font-weight: bold;
+  cursor: pointer;
+
 }
