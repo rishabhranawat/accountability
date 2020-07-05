@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'accountability-client';
+
+  //todo:  if the user is not logged in, redirect to login page
+  // else redirect to something else
 }

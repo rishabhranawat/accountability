@@ -36,6 +36,7 @@ export class LoginFormComponent implements OnInit {
       Password: this.password
     } as User).subscribe((data: any) => {
       this.isProcessing = false;
+      this.router.navigate(['/dashboard']);
     });
   }
 

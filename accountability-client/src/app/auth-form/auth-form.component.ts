@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthFormComponent implements OnInit {
 
-  constructor() { }
+  public showLogin: boolean;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.showLogin = true;
+  }
+
+  switchView(): void {
+    this.showLogin = !this.showLogin;
   }
 
 }

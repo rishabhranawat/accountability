@@ -1,3 +1,4 @@
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { AuthFormComponent } from './auth-form.component';
 import { LogoutFormComponent } from './logout-form/logout-form.component';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   declarations: [
     LoginFormComponent,
     LogoutFormComponent,
-    AuthFormComponent
+    AuthFormComponent,
+    SignUpFormComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   providers: [
     AuthService
   ],
-  exports: [LoginFormComponent, LogoutFormComponent, AuthFormComponent],
+  exports: [LoginFormComponent, LogoutFormComponent, AuthFormComponent, SignUpFormComponent],
   bootstrap: []
 })
 export class AuthFormModule { }
