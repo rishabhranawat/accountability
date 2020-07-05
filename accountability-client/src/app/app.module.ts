@@ -12,6 +12,7 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CookieService } from 'ngx-cookie-service';
     AgGridModule.withComponents([]),
     NgbModule,
     CommonModule,
-    AuthFormModule
+    AuthFormModule,
+    FontAwesomeModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

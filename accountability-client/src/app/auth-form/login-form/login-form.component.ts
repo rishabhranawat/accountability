@@ -2,6 +2,8 @@ import { User } from './../../models/user.model';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login-form',
@@ -12,18 +14,21 @@ export class LoginFormComponent implements OnInit {
 
   public password: string;
   public email: string;
+  public faUser = faUser;
+
 
   public isProcessing: boolean;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
-
   }
 
   ngOnInit(): void {
   }
 
+  // Todo validations
   login(): void {
     this.isProcessing = true;
     this.authService.login({
@@ -31,7 +36,6 @@ export class LoginFormComponent implements OnInit {
       Password: this.password
     } as User).subscribe((data: any) => {
       this.isProcessing = false;
-      console.log(data);
     });
   }
 
