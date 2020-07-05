@@ -1,0 +1,15 @@
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-form {
+  flex: 1;
+}
+
+.tabs {
+  padding-top: 2rem;
+  flex: 1;
+  margin: auto;
+}

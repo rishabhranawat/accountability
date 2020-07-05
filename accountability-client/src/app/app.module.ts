@@ -12,6 +12,8 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { CookieService } from 'ngx-cookie-service';
     TasksGridComponent,
     CreateTaskFormComponent,
     TimelineComponent,
-    DashboardComponent
+    DashboardComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { CookieService } from 'ngx-cookie-service';
     AgGridModule.withComponents([]),
     NgbModule,
     CommonModule,
-    AuthFormModule
+    AuthFormModule,
+    FontAwesomeModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
