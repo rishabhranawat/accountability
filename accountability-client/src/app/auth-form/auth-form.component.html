@@ -1,10 +1,21 @@
-<div class="auth-form-container">
-  <div class="login-form">
-    <app-login-form></app-login-form>
+<div class="all">
+  <div class="app-header">
+    <h1>accountability</h1>
   </div>
-  <div class="create-form">
-  </div>
-  <div class="tabs">
-    <span><strong>log in</strong></span>/<span>create user</span>
+
+  <div class="auth-forms">
+    <div class="auth-form-container">
+      <div [hidden]="!showLogin" class="login-form">
+        <app-login-form></app-login-form>
+      </div>
+      <div [hidden]="showLogin" class="create-form">
+        <app-sign-up-form></app-sign-up-form>
+      </div>
+      <div class="tabs">
+        <span [ngClass]= "{'active-tab': showLogin, 'tab': '!showLogin'}" (click)="switchView()">log in</span>
+        /
+        <span [ngClass]= "{'active-tab': !showLogin, 'tab': 'showLogin'}" (click)="switchView()">create user</span>
+      </div>
+    </div>
   </div>
 </div>

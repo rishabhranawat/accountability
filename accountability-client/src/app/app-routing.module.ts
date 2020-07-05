@@ -1,8 +1,12 @@
+import { AuthFormComponent } from './auth-form/auth-form.component';
+import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+// TODO change to lazy loading where necessary
 const routes: Routes = [
+  { path: 'login', component: AuthFormComponent},
   { path: 'dashboard', component: DashboardComponent }
 ];
 
