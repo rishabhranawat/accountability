@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PersonalComponent implements OnInit {
 
+  dashboard: String = "personal"
+
   constructor(
   ) {}
 
