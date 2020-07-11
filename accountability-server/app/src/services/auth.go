@@ -18,6 +18,10 @@ type LoginResponse struct {
 	UserName     string
 }
 
+type CreateUserResponse struct {
+	UserName string
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var p models.User
@@ -71,7 +75,15 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	p.Password = string(hash)
 	env.DbConnection.Create(&p)
 
-	fmt.Fprintf(w, "Successfully created user with username: %s and email: %s", p.UserName, p.Email)
+	authmiddleware.GenerateTokensAndSetOnHeader(p.UserName, &w)
+
+	var response CreateUserResponse
+	response.UserName = p.UserName
+
+	jResponse, err := json.Marshal(response)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
 }
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
