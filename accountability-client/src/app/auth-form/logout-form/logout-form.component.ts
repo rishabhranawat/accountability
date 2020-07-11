@@ -19,11 +19,7 @@ export class LogoutFormComponent implements OnInit {
   }
 
   logout(): void {
-    // this.authService.logout({UserName: 'rish 4'} as User).subscribe((data: any) => {
-    //   console.log(data);
-    // });
-
-    this.tasksService.getTasks().subscribe((data: any) => {
+    this.authService.logout({UserName: 'rish 4'} as User).subscribe((data: any) => {
       console.log(data);
     });
   }
