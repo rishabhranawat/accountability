@@ -22,6 +22,10 @@ type CreateUserResponse struct {
 	UserName string
 }
 
+type LogoutResponse struct {
+	ok string
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var p models.User
@@ -57,6 +61,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("here!")
+	authmiddleware.ExpireTokenOnHeader(&w)
+
+	var response LogoutResponse
+	response.ok = "ok"
+
+	jResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
+
 }
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {

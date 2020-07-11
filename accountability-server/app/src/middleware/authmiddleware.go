@@ -70,6 +70,24 @@ func setTokensOnHeader(w *http.ResponseWriter, token string, refreshToken string
 	http.SetCookie(*w, &refreshCookie)
 }
 
+func ExpireTokenOnHeader(w *http.ResponseWriter) {
+	authCookie := http.Cookie{
+		Name:    "AuthToken",
+		Path:    "/",
+		Expires: time.Now(),
+	}
+
+	http.SetCookie(*w, &authCookie)
+
+	refreshCookie := http.Cookie{
+		Name:    "RefreshToken",
+		Path:    "/",
+		Expires: time.Now(),
+	}
+
+	http.SetCookie(*w, &refreshCookie)
+}
+
 /*
 Token validation
 */
