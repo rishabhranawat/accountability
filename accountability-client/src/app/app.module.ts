@@ -1,3 +1,4 @@
+import { StoreModule } from '@ngrx/store';
 import { CommonModule } from './common/common.module';
 import { AuthFormModule } from './auth-form/auth-form.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
     CreateTaskFormComponent,
     TimelineComponent,
     DashboardComponent,
-    PersonalComponent, 
+    PersonalComponent,
     ProfileComponent,
     SideNavComponent
   ],
@@ -35,7 +37,9 @@ import { ProfileComponent } from './profile/profile.component';
     NgbModule,
     CommonModule,
     AuthFormModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

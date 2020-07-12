@@ -12,7 +12,6 @@ import (
 
 func Handlers() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", AccountabilityAppHandler).Methods("GET")
 
 	// auth services
 	r.HandleFunc("/auth/create", auth.CreateHandler).Methods("POST")
@@ -20,6 +19,7 @@ func Handlers() *mux.Router {
 
 	validatedAuthRoutes := r.PathPrefix("/auth").Subrouter()
 	validatedAuthRoutes.Use(AuthMiddleware)
+	validatedAuthRoutes.HandleFunc("/", AccountabilityAppHandler).Methods("GET")
 	validatedAuthRoutes.HandleFunc("/logout", auth.LogoutHandler).Methods("POST")
 	validatedAuthRoutes.HandleFunc("/get-user", auth.GetUserHandler).Methods("GET")
 
@@ -38,6 +38,7 @@ func AuthMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !authmiddleware.Validate(w, r) {
 			http.Error(w, "No valid login token", http.StatusForbidden)
+			return
 		}
 		h.ServeHTTP(w, r)
 	})
