@@ -1,3 +1,4 @@
+import { UserDetailsStoreModule } from './../store/user-details/user-details-store.module';
 import { AuthService } from './services/auth.service';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { AuthFormComponent } from './auth-form.component';
@@ -19,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     FormsModule,
     FontAwesomeModule,
+    UserDetailsStoreModule
   ],
   providers: [
     AuthService

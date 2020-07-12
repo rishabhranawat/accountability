@@ -1,19 +1,19 @@
 import { UserState } from './user-state';
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, select } from '@ngrx/store';
 
-export const selectStarshipsState = createFeatureSelector<UserState>('userState');
+export const selectUserState = createFeatureSelector<UserState>('userStateF');
 
 export const selectUser = createSelector(
-  selectStarshipsState,
+  selectUserState,
   (state: UserState) => state.user
 );
 
 export const isAuthenticated = createSelector(
-  selectStarshipsState,
+  selectUserState,
   (state: UserState) => state.isAuthenticated
 );
 
 export const isProcessing = createSelector(
-  selectStarshipsState,
+  selectUserState,
   (state: UserState) => state.isProcessing
 );

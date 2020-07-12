@@ -30,7 +30,9 @@ export class LoginFormComponent implements OnInit {
     });
 
     this.authService.userAuthenticated().subscribe((data: boolean) => {
-      this.router.navigate(['dashboard']);
+      if(data){
+        this.router.navigate(['dashboard']);
+      }
     });
   }
 

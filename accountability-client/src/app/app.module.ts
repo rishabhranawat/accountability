@@ -1,5 +1,4 @@
-import { UserEffects } from './store/user-details/user-effects';
-import { UserService } from './store/user-details/services/user.service';
+import { StoreModule } from '@ngrx/store';
 import { CommonModule } from './common/common.module';
 import { AuthFormModule } from './auth-form/auth-form.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,8 +18,6 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { userReducer } from './store/user-details/user-reducer';
 
 @NgModule({
   declarations: [
@@ -41,10 +38,10 @@ import { userReducer } from './store/user-details/user-reducer';
     CommonModule,
     AuthFormModule,
     FontAwesomeModule,
-    StoreModule.forRoot({userState: userReducer}),
-    EffectsModule.forRoot([UserEffects])
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
-  providers: [CookieService, UserService],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
