@@ -1,3 +1,5 @@
+import { UserEffects } from './store/user-details/user-effects';
+import { UserService } from './store/user-details/services/user.service';
 import { CommonModule } from './common/common.module';
 import { AuthFormModule } from './auth-form/auth-form.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +18,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './store/user-details/user-reducer';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,7 @@ import { ProfileComponent } from './profile/profile.component';
     CreateTaskFormComponent,
     TimelineComponent,
     DashboardComponent,
-    PersonalComponent, 
+    PersonalComponent,
     ProfileComponent,
     SideNavComponent
   ],
@@ -35,9 +40,11 @@ import { ProfileComponent } from './profile/profile.component';
     NgbModule,
     CommonModule,
     AuthFormModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forRoot({userState: userReducer}),
+    EffectsModule.forRoot([UserEffects])
   ],
-  providers: [CookieService],
+  providers: [CookieService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

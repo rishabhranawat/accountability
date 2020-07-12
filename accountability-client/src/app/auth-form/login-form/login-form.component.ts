@@ -1,5 +1,5 @@
-import { User } from './../../models/user.model';
 import { AuthService } from './../services/auth.service';
+import { User } from './../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,6 +25,13 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.userAuthenticated().subscribe((data: boolean) => {
+      this.isProcessing = data;
+    });
+
+    this.authService.userAuthenticated().subscribe((data: boolean) => {
+      this.router.navigate(['dashboard']);
+    });
   }
 
   // Todo validations
@@ -33,16 +40,9 @@ export class LoginFormComponent implements OnInit {
     this.authService.login({
       Email: this.email,
       Password: this.password
-    } as User).subscribe(
-      (data: any) => {
-        this.isProcessing = false;
-        this.router.navigate(['/dashboard']);
-      },
-      (error: any) => {
-        this.isProcessing = false;
-        console.log(error);
-      }
-    );
+    } as User);
   }
+
+
 
 }

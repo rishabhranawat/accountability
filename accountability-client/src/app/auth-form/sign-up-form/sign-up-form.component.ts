@@ -1,6 +1,6 @@
+import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from './../../models/user.model';
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
@@ -25,6 +25,13 @@ export class SignUpFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.userAuthenticated().subscribe((data: boolean) => {
+      this.isProcessing = data;
+    });
+
+    this.authService.userAuthenticated().subscribe((data: boolean) => {
+      this.router.navigate(['/dashboard']);
+    });
   }
 
   create(): void {
@@ -33,17 +40,7 @@ export class SignUpFormComponent implements OnInit {
       Email: this.email,
       Password: this.password
     } as User;
-    this.isProcessing = true;
-    this.authService.create(user)
-    .pipe(finalize(() => this.isProcessing = false))
-    .subscribe(
-      (success: any) => {
-        this.router.navigate(['dashboard']);
-      },
-      (error: any) => {
-        this.errors = error.error;
-      },
-    );
+    this.authService.create(user);
   }
 
 
