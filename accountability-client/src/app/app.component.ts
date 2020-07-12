@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'accountability-client';
 
-  //todo:  if the user is not logged in, redirect to login page
-  // else redirect to something else
+  constructor(){
+
+  }
+
+  ngOnInit(){
+
+  }
 }

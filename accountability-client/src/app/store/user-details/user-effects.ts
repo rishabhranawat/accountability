@@ -18,7 +18,7 @@ export class UserEffects {
     ofType(login),
     mergeMap((action) => this.userService.login(action.user)
       .pipe(
-        map((succes: any) => (setUserDetails({ user: {} as User }))),
+        map((success: any) => (setUserDetails({ user: {UserName: success.UserName, Email: success.Email} as User }))),
         catchError(() => EMPTY)
       ))
     )

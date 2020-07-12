@@ -1,6 +1,4 @@
-import { AuthService } from './../services/auth.service';
-import { TasksService } from './../../common/services/tasks.service';
-import { User } from './../../models/user.model';
+import { AuthService } from '../../common/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +10,6 @@ export class LogoutFormComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private tasksService: TasksService
   ) { }
 
   ngOnInit(): void {
