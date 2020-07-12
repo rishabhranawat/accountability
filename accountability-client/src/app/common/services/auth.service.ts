@@ -17,7 +17,7 @@ export class AuthService {
   ){
   }
 
-  public login(data: User) {
+  public login(data?: User) {
     this.store.dispatch(login({user: data}));
   }
 

@@ -2,6 +2,7 @@ import { RequestHandlerService } from '../../../common/services/request-handler.
 import { User } from '../../../models/user.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { isNullOrUndefined } from 'util';
 
 @Injectable()
 export class UserService {
@@ -10,8 +11,12 @@ export class UserService {
     private requestService: RequestHandlerService){
   }
 
-  public login(user: User): Observable<object> {
+  public login(user?: User): Observable<object> {
+    if (user === null || user === undefined){
+      return this.requestService.post('/auth/login', {});
+    }
     return this.requestService.post('/auth/login', user);
+
   }
 
   public logout(user?: User): Observable<object> {

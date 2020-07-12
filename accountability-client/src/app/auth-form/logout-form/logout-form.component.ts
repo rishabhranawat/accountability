@@ -13,6 +13,7 @@ export class LogoutFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.logout();
   }
 
   logout(): void {

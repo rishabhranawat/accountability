@@ -2,6 +2,7 @@ package authmiddleware
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -142,20 +143,40 @@ func validateToken(tokenString string) bool {
 	}
 }
 
-func GetClaims(tokenString string) interface{} {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
-		return []byte("secret"), nil
+// func GetClaims(tokenString string) interface{} {
+// 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+// 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+// 		}
+// 		return []byte("secret"), nil
+// 	})
+
+// 	if err != nil {
+// 		return nil
+// 	}
+
+// 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+// 		return claims
+// 	}
+// 	return nil
+// }
+
+func ExtractClaims(tokenStr string) (jwt.MapClaims, bool) {
+	hmacSecretString := "secret"
+	hmacSecret := []byte(hmacSecretString)
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		// check token signing method etc
+		return hmacSecret, nil
 	})
 
 	if err != nil {
-		return nil
+		return nil, false
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return claims
+		return claims, true
+	} else {
+		log.Printf("Invalid JWT Token")
+		return nil, false
 	}
-	return nil
 }
