@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [ CanActivateAuthGuard ] },
   { path: 'personal', component: PersonalComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'logout', component: AuthFormComponent }
+  { path: 'logout', component: AuthFormComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
