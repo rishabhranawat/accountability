@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
+import { UserDetailsStoreModule } from './store/user-details/user-details-store.module';
 import { StoreModule } from '@ngrx/store';
-import { CommonModule } from './common/common.module';
+import { CommonAccountabilityModule } from './common/common.module';
 import { AuthFormModule } from './auth-form/auth-form.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -36,10 +38,12 @@ import { EffectsModule } from '@ngrx/effects';
     AgGridModule.withComponents([]),
     NgbModule,
     CommonModule,
+    CommonAccountabilityModule,
     AuthFormModule,
     FontAwesomeModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    UserDetailsStoreModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

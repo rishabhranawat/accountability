@@ -1,3 +1,4 @@
+import { AuthService } from './../common/services/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -10,9 +11,15 @@ export class SideNavComponent implements OnInit {
   @Input()
   currentDashboard: String;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

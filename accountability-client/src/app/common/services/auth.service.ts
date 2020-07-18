@@ -1,6 +1,6 @@
-import { UserState } from './../../store/user-details/user-state';
-import { isAuthenticated } from './../../store/user-details/user-selector';
-import { login, logout, create } from './../../store/user-details/user-actions';
+import { UserState } from '../../store/user-details/user-state';
+import { isAuthenticated } from '../../store/user-details/user-selector';
+import { login, logout, create } from '../../store/user-details/user-actions';
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ export class AuthService {
   ){
   }
 
-  public login(data: User) {
+  public login(data?: User) {
     this.store.dispatch(login({user: data}));
   }
 

@@ -5,7 +5,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 const userReducerFunc = createReducer(
     initialUserState,
-    on(setUserDetails, (state, {user}) => ({...state, isProcessing: false, isAuthenticated: true})),
+    on(setUserDetails, (state, {user}) => ({...state, isProcessing: false, isAuthenticated: true, user: user})),
     on(expireUserDetails, state => ({isProcessing: false, isAuthenticated: false})),
 
 );

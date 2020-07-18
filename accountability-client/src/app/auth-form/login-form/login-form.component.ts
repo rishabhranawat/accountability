@@ -1,4 +1,4 @@
-import { AuthService } from './../services/auth.service';
+import { AuthService } from '../../common/services/auth.service';
 import { User } from './../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
     });
 
     this.authService.userAuthenticated().subscribe((data: boolean) => {
-      if(data){
+      if (data){
         this.router.navigate(['dashboard']);
       }
     });
