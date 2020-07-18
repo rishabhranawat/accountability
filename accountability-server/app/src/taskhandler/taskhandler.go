@@ -9,6 +9,10 @@ import (
 	"../models"
 )
 
+type AcknowledgmentResponse struct {
+	Message string
+}
+
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	var task models.Task
 	err := json.NewDecoder(r.Body).Decode(&task)
@@ -18,7 +22,17 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	env.DbConnection.Create(&task)
-	fmt.Fprintln(w, "Successfully created task")
+
+	var response AcknowledgmentResponse
+	response.Message = "Successfully created task. Id: " + task.Id
+
+	jResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
 }
 
 func UpdateTask(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +54,16 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 
 	env.DbConnection.Save(task)
 
-	fmt.Fprintln(w, "Successfully updated task")
+	var response AcknowledgmentResponse
+	response.Message = "Successfully updated task. Id: " + task.Id
+
+	jResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
 }
 
 func RemoveTask(w http.ResponseWriter, r *http.Request) {
@@ -55,15 +78,37 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 	env.DbConnection.Where("Id = ?", updatedTask.Id).Find(&task)
 
 	env.DbConnection.Delete(&task)
-	fmt.Fprintln(w, "This will remove a task")
+
+	var response AcknowledgmentResponse
+	response.Message = "Successfully removed task. Id: " + task.Id
+
+	jResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
 }
 
-func GetUserTasks(w http.ResponseWriter, r *http.Request) {
-	// queryValues := r.URL.Query()
-	// name := queryValues.Get("username")
-	// fmt.Fprintln(w, "This is the user "+name)
+func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
+	var user models.User
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-	//TODO guruis - query tasks here for the given user
-	// var task models.Task
-	// env.DbConnection.Where("Workers.UserName = ?", name).Find(&task)
+	var tasks []models.Task
+	env.DbConnection.Where("Workers = ?", user).Find(&tasks)
+
+	fmt.Fprintln(w, "This will retrieve all tasks for a given user")
+
+	jResponse, err := json.Marshal(tasks)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
 }

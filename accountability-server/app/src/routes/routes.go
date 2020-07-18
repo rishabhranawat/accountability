@@ -29,7 +29,7 @@ func Handlers() *mux.Router {
 	taskRoutes.HandleFunc("/create-task", taskhandler.CreateTask).Methods("POST")
 	taskRoutes.HandleFunc("/update-task", taskhandler.UpdateTask).Methods("POST")
 	taskRoutes.HandleFunc("/remove-task", taskhandler.RemoveTask).Methods("POST")
-	taskRoutes.HandleFunc("/get-tasks", taskhandler.GetUserTasks).Methods("GET")
+	taskRoutes.HandleFunc("/fetch-tasks", taskhandler.FetchUserTasks).Methods("POST")
 
 	return r
 }
