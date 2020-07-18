@@ -1,32 +1,20 @@
+import { isAuthenticated } from './../../store/user-details/user-selector';
+import { UserService } from './../../store/user-details/services/user.service';
 import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { combineLatest, BehaviorSubject } from 'rxjs';
+import { combineLatest, BehaviorSubject, of } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CanActivateAuthGuard implements CanActivate {
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService, private userService: UserService) { }
 
-  canActivate(){
-    const activated = new BehaviorSubject<boolean>(false);
-
-    this.authService.userAuthenticated().subscribe((data: boolean) => {
-      if(data){
-        activated.next(true);
-      } else {
-        this.authService.login();
-        this.authService.requestProcessing().subscribe((requestProcessing: boolean) => {
-          if(!requestProcessing){
-            this.authService.userAuthenticated().subscribe((userLoggedIn: boolean) => {
-              if(userLoggedIn){
-                activated.next(true);
-              }
-            });
-          }
-        });
-      }
-    });
-
-    return activated.asObservable();
+  //Todo: check store first
+  canActivate() {
+    return this.userService.login().pipe(
+      map(response => true),
+      catchError(error => of(false))
+    );
   }
 }
