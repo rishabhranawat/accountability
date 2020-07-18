@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { RequestHandlerService } from './services/request-handler.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { TaskService } from '../store/task-management/services/task.service';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     RequestHandlerService,
     AuthService,
+    TaskService,
     CanActivateAuthGuard
   ],
   bootstrap: []
