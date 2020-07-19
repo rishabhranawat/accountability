@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/jinzhu/gorm"
-  	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"log"
 	"os"
-	"../app/src/models"
-)
 
+	"../app/src/models"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+)
 
 func main() {
 	os.Remove("./accountability.db")
@@ -19,4 +19,8 @@ func main() {
 	defer db.Close()
 
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.TaskMilestoneReaction{})
+	db.AutoMigrate(&models.TaskMilestone{})
+	db.AutoMigrate(&models.Task{})
+
 }

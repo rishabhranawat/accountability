@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	guuid "github.com/google/uuid"
+
 	"../env"
 	"../models"
 )
@@ -21,10 +23,14 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Failed to create task. Sample Input: { Name: X, Description: Y, Workers: User, Trackers: List<Users>, Milestones: List<TaskMileston> }")
 		return
 	}
+
+	var id = guuid.New()
+
+	task.TaskId = id.String()
 	env.DbConnection.Create(&task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully created task. Id: " + task.Id
+	response.Message = "Successfully created task. Id: " + task.TaskId
 
 	jResponse, err := json.Marshal(response)
 	if err != nil {
@@ -44,7 +50,7 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.Id).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.TaskId).Find(&task)
 
 	task.Name = updatedTask.Name
 	task.Description = updatedTask.Description
@@ -55,7 +61,7 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	env.DbConnection.Save(task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully updated task. Id: " + task.Id
+	response.Message = "Successfully updated task. Id: " + task.TaskId
 
 	jResponse, err := json.Marshal(response)
 	if err != nil {
@@ -75,12 +81,12 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.Id).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.TaskId).Find(&task)
 
 	env.DbConnection.Delete(&task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully removed task. Id: " + task.Id
+	response.Message = "Successfully removed task. Id: " + task.TaskId
 
 	jResponse, err := json.Marshal(response)
 	if err != nil {
