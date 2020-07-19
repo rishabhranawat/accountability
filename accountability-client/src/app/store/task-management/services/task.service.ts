@@ -12,19 +12,19 @@ export class TaskService {
     ){}
 
     public createTask(task? : Task) : Observable<object> {
-        return this.requestService.post('/create-task', task);
+        return this.requestService.post('/tasks/create-task', task);
     }
 
     public updateTask(task? : Task) : Observable<object> {
-        return this.requestService.post('/update-task', task);
+        return this.requestService.post('/tasks/update-task', task);
     }
 
     public removeTask(task? : Task) : Observable<object> {
-        return this.requestService.post('/remove-task', task);
+        return this.requestService.post('/tasks/remove-task', task);
     }
 
     public retrieveTasks(user? : User) : Observable<object>  {
-        return this.requestService.post('/fetch-tasks', user);
+        return this.requestService.post('/tasks/fetch-tasks', user);
     }
 
 }

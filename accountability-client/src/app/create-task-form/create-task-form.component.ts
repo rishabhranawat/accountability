@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TaskService } from '../store/task-management/services/task.service';
+import { User } from '../models/user.model';
+import { Task } from '../models/task.model';
+import { NgForm } from '@angular/forms';
+import { TaskMilestone } from '../models/task-milestone.model';
+import { UserComponentFactory } from 'ag-grid-community';
 
 @Component({
   selector: 'app-create-task-form',
@@ -10,23 +16,38 @@ export class CreateTaskFormComponent implements OnInit {
 
   username: String;
 
+  public name: string;
+	public description: string;
+  public milestones: TaskMilestone[];
+  public currentTracker: string; 
+
+  public trackers: User[] = [];
+  private worker: User;
+
   constructor(
     private route: ActivatedRoute,
+    private taskService: TaskService
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.username = params['username'];
-      //TODO guruis - If username not provided here, throw error
-    });
+
   }
   
-  createTask(): void {
-    
+  createTaskHandler(): void {
+    var task: Task = {
+      Name: this.name,
+      Description: this.description,
+      Trackers: this.trackers
+    } as Task
+    this.taskService.createTask(task);
   }
 
-  postTask(): void {
-    
+  addTracker() {
+    var user: User = {
+      Email: this.currentTracker,
+    } as User
+    this.trackers.push(user);
+    this.currentTracker = '';
   }
 
 }

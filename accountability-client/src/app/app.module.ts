@@ -20,6 +20,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { EffectsModule } from '@ngrx/effects';
     CommonModule,
     CommonAccountabilityModule,
     AuthFormModule,
+    FormsModule,
     FontAwesomeModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
