@@ -19,7 +19,7 @@ export class CreateTaskFormComponent implements OnInit {
   public name: string;
 	public description: string;
   public milestones: TaskMilestone[];
-  public currentTracker: string; 
+  public currentTracker: string;
 
   public trackers: User[] = [];
   private worker: User;
@@ -32,14 +32,16 @@ export class CreateTaskFormComponent implements OnInit {
   ngOnInit() {
 
   }
-  
+
   createTaskHandler(): void {
     var task: Task = {
       Name: this.name,
       Description: this.description,
       Trackers: this.trackers
     } as Task
-    this.taskService.createTask(task);
+    this.taskService.createTask(task).subscribe((data: any) => {
+      console.log(data);
+    }, (error: any) => {console.log("error!")});
   }
 
   addTracker() {
