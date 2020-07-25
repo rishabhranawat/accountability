@@ -6,7 +6,10 @@ import (
 )
 
 type Tracker struct {
-	Tracker User
+	User   `gorm:"foreignkey:UserID"`
+	UserID uint
+	Task   `gorm:"foreignkey:TaskID"`
+	TaskID uint
 }
 
 type Task struct {
@@ -14,8 +17,6 @@ type Task struct {
 
 	Name        string `gorm:"type:varchar(255);"`
 	Description string `gorm:"type:varchar(255);"`
-	Workers     User
-	Trackers    []Tracker
-	Milestones  []TaskMilestone
-	TaskId      string `gorm:"type:varchar(100);unique_index;not null"`
+	User        User   `gorm:"foreignkey:UserID"`
+	UserID      uint
 }
