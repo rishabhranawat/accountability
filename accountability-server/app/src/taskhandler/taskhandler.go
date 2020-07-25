@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	guuid "github.com/google/uuid"
-
 	"../env"
 	"../models"
 )
@@ -24,13 +22,10 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var id = guuid.New()
-
-	task.TaskId = id.String()
 	env.DbConnection.Create(&task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully created task. Id: " + task.TaskId
+	response.Message = "Successfully created task."
 
 	jResponse, err := json.Marshal(response)
 	if err != nil {
@@ -50,18 +45,16 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.TaskId).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.ID).Find(&task)
 
 	task.Name = updatedTask.Name
 	task.Description = updatedTask.Description
-	task.Trackers = updatedTask.Trackers
-	task.Milestones = updatedTask.Milestones
-	task.Workers = updatedTask.Workers
+	task.User = updatedTask.User
 
 	env.DbConnection.Save(task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully updated task. Id: " + task.TaskId
+	response.Message = "Successfully updated task. Id: " + fmt.Sprint(task.ID)
 
 	jResponse, err := json.Marshal(response)
 	if err != nil {
@@ -81,13 +74,12 @@ func RemoveTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var task models.Task
-	env.DbConnection.Where("Id = ?", updatedTask.TaskId).Find(&task)
+	env.DbConnection.Where("Id = ?", updatedTask.ID).Find(&task)
 
 	env.DbConnection.Delete(&task)
 
 	var response AcknowledgmentResponse
-	response.Message = "Successfully removed task. Id: " + task.TaskId
-
+	response.Message = "Successfully removed task. Id: " + fmt.Sprint(task.ID)
 	jResponse, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
@@ -106,7 +98,7 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tasks []models.Task
-	env.DbConnection.Where("Workers = ?", user).Find(&tasks)
+	env.DbConnection.Where("user_id = 1").Find(&tasks)
 
 	fmt.Fprintln(w, "This will retrieve all tasks for a given user")
 
