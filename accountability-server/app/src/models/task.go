@@ -6,10 +6,20 @@ import (
 )
 
 type Tracker struct {
-	User   `gorm:"foreignkey:UserID"`
-	UserID uint
-	Task   `gorm:"foreignkey:TaskID"`
-	TaskID uint
+	gorm.Model
+
+	User        User `gorm:"foreignkey:UserReferID"`
+	UserReferID uint
+	Task        Task `gorm:"foreignkey:TaskReferID"`
+	TaskReferID uint
+}
+
+type TaskUpdate struct {
+	gorm.Model
+
+	Task        Task `gorm:"foreignKey:TaskReferID"`
+	TaskReferID uint
+	Description string `gorm:"type:varchar(255);"`
 }
 
 type Task struct {
