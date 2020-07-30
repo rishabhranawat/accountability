@@ -1,0 +1,7 @@
+Useful sql queries:
+
+Display all table names:
+SELECT name FROM sqlite_master WHERE type='table';
+
+Display all columns in a table:
+SELECT c.name FROM pragma_table_info('your_table_name') c;

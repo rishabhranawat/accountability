@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"../app/src/models"
 	"github.com/jinzhu/gorm"
@@ -10,7 +9,7 @@ import (
 )
 
 func main() {
-	os.Remove("./accountability.db")
+	// os.Remove("./accountability.db")
 	db, err := gorm.Open("sqlite3", "./accountability.db")
 	if err != nil {
 		log.Fatal(err)
@@ -19,8 +18,8 @@ func main() {
 	defer db.Close()
 
 	db.AutoMigrate(&models.User{})
-	db.AutoMigrate(&models.TaskMilestoneReaction{})
-	db.AutoMigrate(&models.TaskMilestone{})
 	db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.TaskUpdate{})
+	db.AutoMigrate(&models.Tracker{})
 
 }
