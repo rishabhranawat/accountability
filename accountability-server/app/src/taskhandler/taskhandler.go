@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	authmiddleware "../middleware"
+
 	"../env"
 	"../models"
 )
@@ -13,16 +15,41 @@ type AcknowledgmentResponse struct {
 	Message string
 }
 
+type CreateTaskRequestBody struct {
+	UserTask      models.Task
+	TrackerEmails []string
+}
+
 func CreateTask(w http.ResponseWriter, r *http.Request) {
-	var task models.Task
+
+	// TODO: move this to a request scope?
+	var user = authmiddleware.GetCurrentUser(r)
+
+	if user.ID == 0 {
+		http.Error(w, "Unable to find the current usr", http.StatusBadRequest)
+		fmt.Fprintln(w, "Failed to create task.")
+	}
+
+	var task CreateTaskRequestBody
 	err := json.NewDecoder(r.Body).Decode(&task)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-		fmt.Fprintln(w, "Failed to create task. Sample Input: { Name: X, Description: Y, Workers: User, Trackers: List<Users>, Milestones: List<TaskMileston> }")
+		fmt.Fprintln(w, "Failed to create task.")
 		return
 	}
+	task.UserTask.UserID = user.ID
+	env.DbConnection.Create(&task.UserTask)
 
-	env.DbConnection.Create(&task)
+	var trackerUsers []models.User
+	env.DbConnection.Where("Email IN (?)", task.TrackerEmails).Find(&trackerUsers)
+
+	// figure out a way to insert many
+	for _, item := range trackerUsers {
+		var t models.Tracker
+		t.UserReferID = item.ID
+		t.TaskReferID = task.UserTask.ID
+		env.DbConnection.Create(&t)
+	}
 
 	var response AcknowledgmentResponse
 	response.Message = "Successfully created task."

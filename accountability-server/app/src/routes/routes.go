@@ -6,6 +6,7 @@ import (
 
 	authmiddleware "../middleware"
 	auth "../services"
+	feed "../services/feed"
 	"../taskhandler"
 	"github.com/gorilla/mux"
 )
@@ -30,6 +31,7 @@ func Handlers() *mux.Router {
 	taskRoutes.HandleFunc("/update-task", taskhandler.UpdateTask).Methods("POST")
 	taskRoutes.HandleFunc("/remove-task", taskhandler.RemoveTask).Methods("POST")
 	taskRoutes.HandleFunc("/fetch-tasks", taskhandler.FetchUserTasks).Methods("POST")
+	taskRoutes.HandleFunc("/user-feed", feed.GetFeed).Methods("GET")
 
 	return r
 }
