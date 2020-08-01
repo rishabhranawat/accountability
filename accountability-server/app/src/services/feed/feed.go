@@ -29,7 +29,7 @@ func GetFeed(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tasks []models.Task
-	env.DbConnection.Where("user_id = ?", user.ID).Find(&tasks)
+	env.DbConnection.Where("id IN (SELECT b.task_refer_id FROM trackers AS b WHERE b.user_refer_id = ?) OR user_id = ?", user.ID, user.ID).Find(&tasks)
 
 	var response FeedResponse
 	response.Tasks = tasks
