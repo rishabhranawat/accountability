@@ -23,23 +23,11 @@ type CreateTaskRequestBody struct {
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: move this to a request scope?
-	cookie, cookieFetchError := r.Cookie("AuthToken")
-	var user models.User
-	if cookieFetchError == nil {
-		authToken := cookie.Value
-		claims, worked := authmiddleware.ExtractClaims(authToken)
-		if worked {
-			maybeUsername := claims["user_id"]
+	var user = authmiddleware.GetCurrentUser(r)
 
-			if str, ok := maybeUsername.(string); ok {
-				env.DbConnection.Where("user_name = ?", str).Find(&user)
-			}
-		}
-	}
 	if user.ID == 0 {
-		http.Error(w, "unable to find user", http.StatusBadRequest)
+		http.Error(w, "Unable to find the current usr", http.StatusBadRequest)
 		fmt.Fprintln(w, "Failed to create task.")
-		return
 	}
 
 	var task CreateTaskRequestBody

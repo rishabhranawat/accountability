@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	"../env"
+	"../models"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -160,6 +162,23 @@ func validateToken(tokenString string) bool {
 // 	}
 // 	return nil
 // }
+
+func GetCurrentUser(r *http.Request) models.User {
+	cookie, cookieFetchError := r.Cookie("AuthToken")
+	var user models.User
+	if cookieFetchError == nil {
+		authToken := cookie.Value
+		claims, worked := ExtractClaims(authToken)
+		if worked {
+			maybeUsername := claims["user_id"]
+
+			if str, ok := maybeUsername.(string); ok {
+				env.DbConnection.Where("user_name = ?", str).Find(&user)
+			}
+		}
+	}
+	return user
+}
 
 func ExtractClaims(tokenStr string) (jwt.MapClaims, bool) {
 	hmacSecretString := "secret"
