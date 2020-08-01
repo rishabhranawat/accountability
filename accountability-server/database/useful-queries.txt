@@ -5,3 +5,6 @@ SELECT name FROM sqlite_master WHERE type='table';
 
 Display all columns in a table:
 SELECT c.name FROM pragma_table_info('your_table_name') c;
+
+Get all tasks for a user (where either the user is a creater or the accountant)
+SELECT * FROM tasks AS a WHERE a.id IN (SELECT b.task_refer_id FROM trackers AS b WHERE b.user_refer_id = 2) OR a.user_id = 2
