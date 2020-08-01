@@ -4,6 +4,8 @@ import { User } from 'src/app/models/user.model';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
+
+// TODO: why is this service in /store/task-management?
 @Injectable()
 export class TaskService {
 

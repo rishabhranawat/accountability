@@ -1,3 +1,4 @@
+import { FeedService } from './services/feed.service';
 import { CanActivateAuthGuard } from './guards/can-activate-auth-guard';
 import { AuthService } from './services/auth.service';
 import { RequestHandlerService } from './services/request-handler.service';
@@ -13,6 +14,7 @@ import { TaskService } from '../store/task-management/services/task.service';
     RequestHandlerService,
     AuthService,
     TaskService,
+    FeedService,
     CanActivateAuthGuard
   ],
   bootstrap: []
