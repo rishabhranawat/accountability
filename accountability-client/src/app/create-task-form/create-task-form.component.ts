@@ -1,8 +1,9 @@
+import { Task } from 'src/app/models/task.model';
+import { CreateTaskRequest } from './../common/requests/create-task-request';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../store/task-management/services/task.service';
 import { User } from '../models/user.model';
-import { Task } from '../models/task.model';
 import { NgForm } from '@angular/forms';
 import { TaskMilestone } from '../models/task-milestone.model';
 import { UserComponentFactory } from 'ag-grid-community';
@@ -14,42 +15,26 @@ import { UserComponentFactory } from 'ag-grid-community';
 })
 export class CreateTaskFormComponent implements OnInit {
 
-  username: String;
-
-  public name: string;
-	public description: string;
-  public milestones: TaskMilestone[];
+  public taskRequest: CreateTaskRequest = { UserTask: {} as Task, TrackerEmails: [] as string[]} as CreateTaskRequest;
   public currentTracker: string;
-
-  public trackers: User[] = [];
-  private worker: User;
 
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
   }
 
   createTaskHandler(): void {
-    var task: Task = {
-      Name: this.name,
-      Description: this.description,
-      Trackers: this.trackers
-    } as Task
-    this.taskService.createTask(task).subscribe((data: any) => {
+    this.taskService.createTask(this.taskRequest).subscribe((data: any) => {
       console.log(data);
-    }, (error: any) => {console.log("error!")});
+    }, (error: any) => { console.log('error!'); });
   }
 
   addTracker() {
-    var user: User = {
-      Email: this.currentTracker,
-    } as User
-    this.trackers.push(user);
-    this.currentTracker = '';
+    this.taskRequest.TrackerEmails.push(this.currentTracker);
   }
 
 }

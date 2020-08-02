@@ -1,3 +1,4 @@
+import { CreateTaskRequest } from './../../../common/requests/create-task-request';
 import { RequestHandlerService } from 'src/app/common/services/request-handler.service';
 import { Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
@@ -13,7 +14,7 @@ export class TaskService {
         private requestService: RequestHandlerService
     ){}
 
-    public createTask(task? : Task) : Observable<object> {
+    public createTask(task? : CreateTaskRequest) : Observable<object> {
         return this.requestService.post('/tasks/create-task', task);
     }
 
