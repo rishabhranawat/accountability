@@ -13,4 +13,7 @@ export class FeedService {
     return this.requestHandlerService.get('/tasks/user-feed');
   }
 
+  public getUserSpecificFeed(): Observable<object> {
+    return this.requestHandlerService.get('/tasks/user-profile-feed');
+  }
 }
