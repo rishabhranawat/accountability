@@ -1,6 +1,6 @@
 import { Task } from './../../models/task.model';
 import { TaskService } from '../../common/services/task.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { EventEmitter, Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-task',
@@ -12,6 +12,9 @@ export class TaskComponent implements OnInit {
   @Input()
   public taskId: number;
 
+  @Output()
+  public switchBack: EventEmitter<boolean> = new EventEmitter();
+
   public task: Task;
 
   constructor(
@@ -22,6 +25,10 @@ export class TaskComponent implements OnInit {
     this.taskService.getTaskDetails(this.taskId).subscribe((data) => {
       this.task  = data as Task;
     });
+  }
+
+  public switchToTimeline() {
+    this.switchBack.emit(true);
   }
 
 }
