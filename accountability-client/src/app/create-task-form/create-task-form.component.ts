@@ -4,7 +4,7 @@ import { Task } from 'src/app/models/task.model';
 import { CreateTaskRequest } from './../common/requests/create-task-request';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TaskService } from '../store/task-management/services/task.service';
+import { TaskService } from '../common/services/task.service';
 
 @Component({
   selector: 'app-create-task-form',

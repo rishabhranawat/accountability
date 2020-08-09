@@ -1,8 +1,14 @@
 <div class="timeline-container">
-  <div *ngFor="let h of tasks" class="card timeline-card">
-    <div class="card-body">
-      <h5 class="card-title">{{h.Name}}</h5>
-      <p class="card-text">{{h.Description}}</p>
+  <div *ngIf="!taskView">
+    <div *ngFor="let h of tasks" class="card timeline-card">
+      <div class="card-body" (click)="switchTaskView(h.ID)">
+        <h5 class="card-title">{{h.Name}}</h5>
+        <p class="card-text">{{h.Description}}</p>
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="taskView">
+    <app-task [taskId]="taskId"></app-task>
   </div>
 </div>

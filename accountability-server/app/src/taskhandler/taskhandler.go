@@ -9,6 +9,7 @@ import (
 
 	"../env"
 	"../models"
+	"github.com/gorilla/mux"
 )
 
 type AcknowledgmentResponse struct {
@@ -132,6 +133,21 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 	jResponse, err := json.Marshal(tasks)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
+}
+
+func FetchTaskDetails(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	var task models.Task
+	env.DbConnection.Where("id = ?", vars["task-id"]).Find(&task)
+
+	jResponse, err := json.Marshal(task)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
 	w.Header().Set("Content-Type", "application/json")

@@ -1,7 +1,6 @@
 import { FeedService } from './../common/services/feed.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-timeline',
@@ -17,6 +16,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
+  public taskView: boolean;
+  public taskId: number;
+
   constructor(
     private feedService: FeedService
   ) {
@@ -30,6 +32,11 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.subscription.add(this.tasks$.subscribe(data => {
       this.tasks = (data as any).Tasks as any[];
     }));
+  }
+
+  public switchTaskView(taskId: number): void {
+    this.taskView = true;
+    this.taskId = taskId;
   }
 
   ngOnDestroy(): void {
