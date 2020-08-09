@@ -9,6 +9,6 @@
   </div>
 
   <div *ngIf="taskView">
-    <app-task [taskId]="taskId"></app-task>
+    <app-task [taskId]="taskId" (switchBack)="onSwitchBack($event)"></app-task>
   </div>
 </div>

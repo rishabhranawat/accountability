@@ -39,8 +39,14 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.taskId = taskId;
   }
 
+  public onSwitchBack(switchBack: boolean): void {
+    this.taskView = false;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+
 
 }
