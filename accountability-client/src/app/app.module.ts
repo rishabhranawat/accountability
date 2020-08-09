@@ -9,7 +9,6 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TasksGridComponent } from './tasks-grid/tasks-grid.component';
 import { CreateTaskFormComponent } from './create-task-form/create-task-form.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,17 +20,20 @@ import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
+import { SendReminderComponent } from './timeline/task/send-reminder/send-reminder.component';
+import { TaskComponent } from './timeline/task/task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksGridComponent,
     CreateTaskFormComponent,
     TimelineComponent,
     DashboardComponent,
     PersonalComponent,
     ProfileComponent,
-    SideNavComponent
+    SideNavComponent,
+    SendReminderComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

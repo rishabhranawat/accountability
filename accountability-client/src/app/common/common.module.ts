@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { RequestHandlerService } from './services/request-handler.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { TaskService } from '../store/task-management/services/task.service';
+import { TaskService } from './services/task.service';
 
 @NgModule({
   imports: [

@@ -2,13 +2,13 @@
     <!-- TODO ishan - update all CSS for form once functionality is working -->
     <div class="container col-md-12">
         <div class="input-container form-group">
-          <input placeholder="Name" type="text" class="form-control form-rounded" [(ngModel)]="name" required>
+          <input placeholder="Name" type="text" class="form-control form-rounded" [(ngModel)]="taskRequest.UserTask.Name" required>
         </div>
-  
+
         <div class="form-group">
-          <input placeholder="Description" type="text" class="form-control form-rounded" [(ngModel)]="description" required>
+          <input placeholder="Description" type="text" class="form-control form-rounded" [(ngModel)]="taskRequest.UserTask.Description" required>
         </div>
-        
+
         <div class="form-group">
           <input placeholder="Trackers" type="text" class="form-control form-rounded" [(ngModel)]="currentTracker">
           <button type="submit" class="btn btn-primary submit-button form-rounded" (click)="addTracker()">
@@ -17,13 +17,15 @@
         </div>
 
         <ul class="">
-          <li *ngFor="let tracker of trackers">
-            <span class="badge">{{tracker.Email}}</span>
+          <li *ngFor="let tracker of taskRequest.TrackerEmails">
+            <span class="badge">{{tracker}}</span>
           </li>
         </ul>
 
         <button type="submit" class="btn btn-primary submit-button form-rounded" (click)="createTaskHandler()">
           Create
         </button>
-  </div>  
+  </div>
+
+  <app-timeline [tasks$]="tasks$"></app-timeline>
 </div>
