@@ -139,6 +139,18 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 	w.Write(jResponse)
 }
 
+func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
+	var taskUpdate models.TaskUpdate
+
+	err := json.NewDecoder(r.Body).Decode(&taskUpdate)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	env.DbConnection.Create(&taskUpdate)
+}
+
 func FetchTaskDetails(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
