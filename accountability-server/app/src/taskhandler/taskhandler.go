@@ -151,6 +151,53 @@ func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
 	env.DbConnection.Create(&taskUpdate)
 }
 
+func PostTaskComment(w http.ResponseWriter, r *http.Request) {
+	var taskComment models.TaskComment
+
+	var user = authmiddleware.GetCurrentUser(r)
+
+	if user.ID == 0 {
+		http.Error(w, "User Not Found", http.StatusUnauthorized)
+		return
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&taskComment)
+	taskComment.UserReferID = user.ID
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	env.DbConnection.Create(&taskComment)
+
+	var comments []models.TaskComment
+	env.DbConnection.Where("task_refer_id = ?", taskComment.TaskReferID).Find(&comments)
+
+	jResponse, err := json.Marshal(comments)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
+
+}
+
+func FetchTaskComments(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	var comments []models.TaskComment
+	env.DbConnection.Where("task_refer_id = ?", vars["task-id"]).Find(&comments)
+
+	jResponse, err := json.Marshal(comments)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jResponse)
+}
+
 func FetchTaskDetails(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
