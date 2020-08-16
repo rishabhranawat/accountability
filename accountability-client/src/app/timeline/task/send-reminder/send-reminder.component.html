@@ -1,5 +1,17 @@
 <div>
 
-    <p>Send Reminder form</p>
+    <div class="card">
+      <div class="input-container form-group">
+        <input placeholder="comment" type="text" class="form-control form-rounded" id="comment" [(ngModel)]="comment" required>
+      </div>
 
+      <button type="submit" class="btn btn-success submit-button form-rounded" (click)="postComment()">
+        Comment
+      </button>
+    </div>
+    <div *ngFor="let c of comments" class="card">
+      <div class="card-body">
+        <p class="card-text">{{c.Comment}}</p>
+      </div>
+    </div>
 </div>
