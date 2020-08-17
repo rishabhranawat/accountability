@@ -15,7 +15,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SideNavComponent } from './side-nav/side-nav.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EffectsModule } from '@ngrx/effects';
@@ -31,7 +30,6 @@ import { TaskComponent } from './timeline/task/task.component';
     DashboardComponent,
     PersonalComponent,
     ProfileComponent,
-    SideNavComponent,
     SendReminderComponent,
     TaskComponent
   ],

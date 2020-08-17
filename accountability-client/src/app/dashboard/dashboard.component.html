@@ -1,10 +1,32 @@
-
-<div class="dashboard-container">
-  <div class="dashboard-side-nav">
-    <app-side-nav [currentDashboard]=dashboard></app-side-nav>
+<div class="d-flex" id="wrapper" [ngClass]="toggled ? 'toggled' : ''">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Accountability </div>
+    <div class="list-group list-group-flush">
+      <a (click)="switchView('dashboard')" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+      <a (click)="switchView('personal')" class="list-group-item list-group-item-action bg-light">Personal</a>
+      <a (click)="switchView('profile')" class="list-group-item list-group-item-action bg-light">Profile</a>
+      <a (click)="logout()" class="list-group-item list-group-item-action bg-light">Logout</a>
+    </div>
   </div>
 
-  <div class="dashboard-timeline">
-    <app-timeline></app-timeline>
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button class="btn btn-primary" id="menu-toggle" (click)="toggle()">Toggle Menu</button>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    </nav>
+    <div class="container-fluid">
+
+      <app-timeline *ngIf="viewType === 'dashboard'"></app-timeline>
+      <app-personal *ngIf="viewType === 'personal'"></app-personal>
+      <app-profile *ngIf="viewType === 'profile'"></app-profile>
+
+    </div>
   </div>
+  <!-- /#page-content-wrapper -->
+
 </div>

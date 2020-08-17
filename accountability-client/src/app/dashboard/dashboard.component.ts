@@ -1,8 +1,5 @@
+import { AuthService } from './../common/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TaskService } from '../common/services/task.service';
-import { User } from '../models/user.model';
-import { Task } from '../models/task.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,17 +8,26 @@ import { Task } from '../models/task.model';
 })
 export class DashboardComponent implements OnInit {
 
-  dashboard: String = "dashboard"
+  public toggled = false;
+  public viewType = 'dashboard';
 
   constructor(
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
   }
 
-  getTasks(user?: User) : Task[] {
-    var result : Task[] = []; //TODO should be retrieved from taskService
-    return result;
+  public toggle() {
+    this.toggled = !this.toggled;
+  }
+
+  public switchView(switchToViewType: string) {
+    this.viewType = switchToViewType;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }
