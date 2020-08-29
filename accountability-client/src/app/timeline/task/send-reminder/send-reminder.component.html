@@ -3,6 +3,9 @@
     <div class="card">
       <div class="input-container form-group">
         <input placeholder="comment" type="text" class="form-control form-rounded" id="comment" [(ngModel)]="comment" required>
+        <img [src]="url" height="200"> <br/>
+        <input type='file' (change)="onSelectFile($event)">
+
       </div>
 
       <button type="submit" class="btn btn-success submit-button form-rounded" (click)="postComment()">
@@ -14,4 +17,5 @@
         <p class="card-text">{{c.Comment}}</p>
       </div>
     </div>
+
 </div>
