@@ -17,10 +17,10 @@ func main() {
 
 	defer db.Close()
 
-	// db.AutoMigrate(&models.User{})
-	// db.AutoMigrate(&models.Task{})
-	// db.AutoMigrate(&models.TaskUpdate{})
+	//db.AutoMigrate(&models.User{})
+	//db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.TaskUpdate{})
 	// db.AutoMigrate(&models.Tracker{})
 
-	db.AutoMigrate(&models.TaskComment{})
+	//db.AutoMigrate(&models.TaskComment{})
 }

@@ -1,15 +1,16 @@
 package taskhandler
 
 import (
-	"encoding/json"
-	"fmt"
-	"net/http"
+  authmiddleware "../middleware"
+  storage "../middleware/storage"
+  "encoding/json"
+  "fmt"
+  "net/http"
+  "strconv"
 
-	authmiddleware "../middleware"
-
-	"../env"
-	"../models"
-	"github.com/gorilla/mux"
+  "../env"
+  "../models"
+  "github.com/gorilla/mux"
 )
 
 type AcknowledgmentResponse struct {
@@ -142,13 +143,38 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
 	var taskUpdate models.TaskUpdate
 
-	err := json.NewDecoder(r.Body).Decode(&taskUpdate)
+	taskReferId, err := strconv.Atoi(r.FormValue("TaskReferID"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
+	  http.Error(w, err.Error(), http.StatusBadRequest)
+	  return
+  }
+  taskUpdate.TaskReferID = taskReferId
+	taskUpdate.Description = r.FormValue("Description")
 
-	env.DbConnection.Create(&taskUpdate)
+
+	file, header, errWhileRetrievingFile := r.FormFile("uploadFile")
+
+  if errWhileRetrievingFile != nil {
+    http.Error(w, errWhileRetrievingFile.Error(), http.StatusBadRequest)
+    return
+  }
+  defer file.Close()
+
+  if file == nil {
+    env.DbConnection.Create(&taskUpdate)
+    return
+  }
+
+  fileKey := storage.GetUniqueS3Key(header.Filename)
+  uploadedFileSuccessFully := storage.UploadFileToS3(file, fileKey)
+  if !uploadedFileSuccessFully {
+    http.Error(w, "There was an error uploading your file to S3", http.StatusBadRequest)
+    return
+  }
+
+  taskUpdate.MediaURL = fileKey
+  env.DbConnection.Create(&taskUpdate)
+
 }
 
 func PostTaskComment(w http.ResponseWriter, r *http.Request) {
