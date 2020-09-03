@@ -17,6 +17,7 @@ export class SendReminderComponent implements OnInit {
   public imagePath;
   imageURL: any;
   public message: string;
+  private file: any;
 
   url: string | ArrayBuffer = '';
 
@@ -31,14 +32,24 @@ export class SendReminderComponent implements OnInit {
   }
 
   public postComment() {
-    this.taskService.postComment({TaskReferID: this.taskID, Comment: this.comment} as TaskComment).subscribe((data) => {
-      this.comments = data as TaskComment[];
+    const formData = new FormData();
+    formData.append('uploadFile', this.file);
+    formData.append('TaskReferID', this.taskID.toString());
+    formData.append('Description', this.comment);
+
+    this.taskService.postTaskUpdate(formData).subscribe((data) => {
+      console.log(data);
     });
+    // this.taskService.postComment({TaskReferID: this.taskID, Comment: this.comment} as TaskComment).subscribe((data) => {
+    //   this.comments = data as TaskComment[];
+    // });
   }
+
+
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
-
+      this.file = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (e) => { // called once readAsDataURL is completed

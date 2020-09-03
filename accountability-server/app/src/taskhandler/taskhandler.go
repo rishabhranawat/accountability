@@ -142,7 +142,7 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 
 func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
 	var taskUpdate models.TaskUpdate
-
+  fmt.Println(r.FormValue("Description"))
 	taskReferId, err := strconv.Atoi(r.FormValue("TaskReferID"))
 	if err != nil {
 	  http.Error(w, err.Error(), http.StatusBadRequest)
