@@ -10,7 +10,6 @@ export class RequestHandlerService{
 
   private headerOptions: HttpHeaders = new HttpHeaders({
     'Access-Control-Allow-Origin': 'http://localhost:4200',
-    'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH',
     'Access-Control-Allow-Credentials': 'true'

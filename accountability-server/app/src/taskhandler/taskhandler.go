@@ -142,7 +142,6 @@ func FetchUserTasks(w http.ResponseWriter, r *http.Request) {
 
 func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
 	var taskUpdate models.TaskUpdate
-
 	taskReferId, err := strconv.Atoi(r.FormValue("TaskReferID"))
 	if err != nil {
 	  http.Error(w, err.Error(), http.StatusBadRequest)
@@ -151,29 +150,42 @@ func PostTaskUpdate(w http.ResponseWriter, r *http.Request) {
   taskUpdate.TaskReferID = taskReferId
 	taskUpdate.Description = r.FormValue("Description")
 
-
 	file, header, errWhileRetrievingFile := r.FormFile("uploadFile")
 
-  if errWhileRetrievingFile != nil {
-    http.Error(w, errWhileRetrievingFile.Error(), http.StatusBadRequest)
-    return
-  }
-  defer file.Close()
+	if file != nil {
+    if errWhileRetrievingFile != nil {
+      http.Error(w, errWhileRetrievingFile.Error(), http.StatusBadRequest)
+      return
+    }
+    defer file.Close()
 
-  if file == nil {
-    env.DbConnection.Create(&taskUpdate)
-    return
+    if file == nil {
+      env.DbConnection.Create(&taskUpdate)
+      return
+    }
+
+    fileKey := storage.GetUniqueS3Key(header.Filename)
+    uploadedFileSuccessFully := storage.UploadFileToS3(file, fileKey)
+    if !uploadedFileSuccessFully {
+      http.Error(w, "There was an error uploading your file to S3", http.StatusBadRequest)
+      return
+    }
+
+    taskUpdate.MediaURL = fileKey
   }
 
-  fileKey := storage.GetUniqueS3Key(header.Filename)
-  uploadedFileSuccessFully := storage.UploadFileToS3(file, fileKey)
-  if !uploadedFileSuccessFully {
-    http.Error(w, "There was an error uploading your file to S3", http.StatusBadRequest)
-    return
-  }
-
-  taskUpdate.MediaURL = fileKey
   env.DbConnection.Create(&taskUpdate)
+
+  var updates []models.TaskUpdate
+  env.DbConnection.Where("task_refer_id = ?", taskReferId).Find(&updates)
+
+  jResponse, err := json.Marshal(updates)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusBadRequest)
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(jResponse)
 
 }
 
@@ -222,6 +234,23 @@ func FetchTaskComments(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(jResponse)
+}
+
+func FetchTaskUpdates(w http.ResponseWriter, r *http.Request) {
+  vars := mux.Vars(r)
+
+  var updates []models.TaskUpdate
+  env.DbConnection.Where("task_refer_id = ?", vars["task-id"]).Find(&updates)
+
+  jResponse, err := json.Marshal(updates)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusBadRequest)
+  }
+
+
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(jResponse)
 }
 
 func FetchTaskDetails(w http.ResponseWriter, r *http.Request) {

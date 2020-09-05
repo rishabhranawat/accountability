@@ -33,11 +33,19 @@ export class TaskService {
     return this.requestService.get('/tasks/fetch-task-details/' + taskId);
   }
 
+  public postTaskUpdate(formData: FormData): Observable<object> {
+    return this.requestService.post('/tasks/create-task-update', formData);
+  }
+
   public postComment(taskComment: TaskComment): Observable<object> {
     return this.requestService.post('/tasks/create-task-comment', taskComment);
   }
 
   public getComments(taskId: number): Observable<object> {
     return this.requestService.get('/tasks/fetch-task-comments/' + taskId);
+  }
+
+  public getUpdates(taskId: number): Observable<object> {
+    return this.requestService.get('/tasks/fetch-task-updates/' + taskId);
   }
 }
