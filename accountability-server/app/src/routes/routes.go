@@ -35,6 +35,8 @@ func Handlers() *mux.Router {
 	taskRoutes.HandleFunc("/fetch-task-details/{task-id}", taskhandler.FetchTaskDetails).Methods("GET")
 	taskRoutes.HandleFunc("/create-task-update", taskhandler.PostTaskUpdate).Methods("POST")
 	taskRoutes.HandleFunc("/fetch-task-comments/{task-id}", taskhandler.FetchTaskComments).Methods("GET")
+	taskRoutes.HandleFunc("/fetch-task-updates/{task-id}", taskhandler.FetchTaskUpdates).Methods("GET")
+
 	// feed
 	taskRoutes.HandleFunc("/user-feed", feed.GetFeed).Methods("GET")
 	taskRoutes.HandleFunc("/user-profile-feed", feed.GetUserSpecificFeed).Methods("GET")

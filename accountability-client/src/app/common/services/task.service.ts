@@ -44,4 +44,8 @@ export class TaskService {
   public getComments(taskId: number): Observable<object> {
     return this.requestService.get('/tasks/fetch-task-comments/' + taskId);
   }
+
+  public getUpdates(taskId: number): Observable<object> {
+    return this.requestService.get('/tasks/fetch-task-updates/' + taskId);
+  }
 }
