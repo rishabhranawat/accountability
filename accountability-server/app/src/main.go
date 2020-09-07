@@ -13,9 +13,8 @@ import (
 
 func main() {
 	r := routes.Handlers()
-
 	// todo: env files
-	db, err := gorm.Open("sqlite3", "../../database/accountability.db")
+	db, err := gorm.Open("sqlite3", "/Users/rishabh/accountability/accountability-server/database/accountability.db")
 	if err != nil {
 		log.Fatal(err)
 	}

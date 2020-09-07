@@ -14,12 +14,23 @@ type Tracker struct {
 	TaskReferID uint
 }
 
+type TaskComment struct {
+	gorm.Model
+
+	User        User `gorm:"foreignkey:UserReferID"`
+	UserReferID uint
+	Task        Task `gorm:"foreignkey:TaskReferID"`
+	TaskReferID uint
+	Comment     string `gorm:"type:text;"`
+}
+
 type TaskUpdate struct {
 	gorm.Model
 
 	Task        Task `gorm:"foreignKey:TaskReferID"`
-	TaskReferID uint
+	TaskReferID int
 	Description string `gorm:"type:varchar(255);"`
+	MediaURL    string `gorm:"type:text;"`
 }
 
 type Task struct {

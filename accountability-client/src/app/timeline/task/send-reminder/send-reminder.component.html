@@ -1,5 +1,49 @@
 <div>
 
-    <p>Send Reminder form</p>
+    <div class="card">
+
+      <div *ngFor="let u of updates" class="card">
+        <div class="card-body">
+          <p class="card-text">{{u.Description}}</p>
+        </div>
+      </div>
+      <a routerLink="." (click)="switchUpdates()">Show More Updates...</a>
+
+      <div class="update-form">
+        <div class="input-container form-group">
+          <input placeholder="update" type="text" class="form-control form-rounded" id="update" [(ngModel)]="update" required>
+          <img [src]="updateUrl" height="200"> <br/>
+          <input type='file' (change)="onSelectFile($event, 'update')">
+        </div>
+        <button type="submit" class="btn btn-success submit-button form-rounded" (click)="postUpdate()">
+          Update
+        </button>
+      </div>
+    </div>
+
+
+
+    <div class="card">
+      <div *ngFor="let c of comments" class="card">
+        <div class="card-body">
+          <p class="card-text">{{c.Comment}}</p>
+        </div>
+      </div>
+      <a routerLink="." (click)="switchComments()">Show More Comments...</a>
+
+      <div class="comment-form">
+        <div class="input-container form-group">
+          <input placeholder="comment" type="text" class="form-control form-rounded" id="comment" [(ngModel)]="comment" required>
+          <img [src]="commentUrl" height="200"> <br/>
+          <input type='file' (change)="onSelectFile($event, 'comment')">
+        </div>
+        <button type="submit" class="btn btn-success submit-button form-rounded" (click)="postComment()">
+          Comment
+        </button>
+      </div>
+    </div>
+
+
+
 
 </div>

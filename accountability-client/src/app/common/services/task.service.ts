@@ -1,3 +1,4 @@
+import { TaskComment } from './../../models/task-comment.model';
 import { CreateTaskRequest } from '../requests/create-task-request';
 import { RequestHandlerService } from 'src/app/common/services/request-handler.service';
 import { Task } from 'src/app/models/task.model';
@@ -32,4 +33,19 @@ export class TaskService {
     return this.requestService.get('/tasks/fetch-task-details/' + taskId);
   }
 
+  public postTaskUpdate(formData: FormData): Observable<object> {
+    return this.requestService.post('/tasks/create-task-update', formData);
+  }
+
+  public postComment(taskComment: TaskComment): Observable<object> {
+    return this.requestService.post('/tasks/create-task-comment', taskComment);
+  }
+
+  public getComments(taskId: number): Observable<object> {
+    return this.requestService.get('/tasks/fetch-task-comments/' + taskId);
+  }
+
+  public getUpdates(taskId: number): Observable<object> {
+    return this.requestService.get('/tasks/fetch-task-updates/' + taskId);
+  }
 }

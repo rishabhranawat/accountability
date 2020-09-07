@@ -1,3 +1,4 @@
+import { FeedTask } from './../models/feed-task.model';
 import { FeedService } from './../common/services/feed.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
@@ -12,7 +13,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   @Input()
   public tasks$: Observable<object>;
 
-  public tasks: any[];
+  public tasks: FeedTask[];
 
   private subscription: Subscription;
 
