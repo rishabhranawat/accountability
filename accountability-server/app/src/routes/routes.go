@@ -7,6 +7,7 @@ import (
 	authmiddleware "../middleware"
 	auth "../services"
 	feed "../services/feed"
+	relationshipmgmt "../services/relationshipmgmt"
 	"../taskhandler"
 	"github.com/gorilla/mux"
 )
@@ -40,6 +41,14 @@ func Handlers() *mux.Router {
 	// feed
 	taskRoutes.HandleFunc("/user-feed", feed.GetFeed).Methods("GET")
 	taskRoutes.HandleFunc("/user-profile-feed", feed.GetUserSpecificFeed).Methods("GET")
+
+
+	//relationshipmgmt
+	relationshipRoutes := r.PathPrefix("/relationship").Subrouter()
+	relationshipRoutes.Use(AuthMiddleware)
+	relationshipRoutes.HandleFunc("/create-relationship", relationshipmgmt.CreateRelationship).Methods("POST")
+	relationshipRoutes.HandleFunc("/approve-relationship", relationshipmgmt.ApproveRelationship).Methods("POST")
+	relationshipRoutes.HandleFunc("/delete-relationship", relationshipmgmt.DeleteRelationship).Methods("POST")
 
 	return r
 }
